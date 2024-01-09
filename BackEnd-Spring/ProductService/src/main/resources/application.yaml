@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: PRODUCT-SERVICE
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/productdb
+    username: root
+    password: mySql@1234
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: #org.hibernate.dialect.MySQL57InnoDBDialect
+      org:
+        hibernate:
+          dialect:
+            MySQL5InnoDBDialect:
+    hibernate:
+      ddl-auto: update
+  config:
+    import: configserver:http://localhost:9296
+
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
