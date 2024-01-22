@@ -1,14 +1,14 @@
 package com.saudrav.OrderService.controller;
 
 import com.saudrav.OrderService.model.AddOrderRequest;
+import com.saudrav.OrderService.model.OrderDetailsResponse;
 import com.saudrav.OrderService.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/order")
@@ -23,6 +23,14 @@ public class orderController {
         Long id = orderService.placeOrder(addOrderRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
 
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderDetailsResponse> getOrderDetailsById(@PathVariable("id") String id) {
+        OrderDetailsResponse orderDetailsResponse = orderService.getOrderDetailsByID(id);
+        //return ResponseEntity.ok(orderDetailsResponse);
+        //return ResponseEntity.status(HttpStatus.OK).body(orderDetailsResponse);
+        return new ResponseEntity<>(orderDetailsResponse, HttpStatus.OK);
     }
 
 
