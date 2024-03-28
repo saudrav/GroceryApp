@@ -1,4 +1,4 @@
-package com.saudrav.OrderService.model;
+package com.saudrav.OrderService.utils.enums;
 
 public enum PaymentMode {
 

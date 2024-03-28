@@ -36,4 +36,13 @@ public class ProductController {
         return new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
 
+    @PutMapping("/reduceQuantity/{id}")
+    public ResponseEntity<Void> reduceProductQuantity(@PathVariable("id") long id,
+                                                  @RequestParam("quantity") int quantity) {
+        productService.reduceQuantity(id, quantity);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+
+
 }

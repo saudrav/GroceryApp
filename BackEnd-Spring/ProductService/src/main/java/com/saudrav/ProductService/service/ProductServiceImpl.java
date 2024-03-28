@@ -2,6 +2,7 @@ package com.saudrav.ProductService.service;
 
 import com.saudrav.ProductService.entity.Product;
 import com.saudrav.ProductService.exception.ProductNotFoundException;
+import com.saudrav.ProductService.exception.ProductQuantityOverloadException;
 import com.saudrav.ProductService.model.ProductRequest;
 import com.saudrav.ProductService.model.ProductResponse;
 import com.saudrav.ProductService.repository.ProductServiceRepo;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Service
 @Log4j2
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductServiceRepo productServiceRepo;
@@ -51,5 +52,20 @@ public class ProductServiceImpl implements ProductService{
         ProductResponse productResponse = new ProductResponse();
         BeanUtils.copyProperties(product, productResponse);
         return productResponse;
+    }
+
+    @Override
+    public void reduceQuantity(long id, int quantity) {
+        log.info("Request received to reduce quantity {} for productId {}", quantity, id);
+        Product prd = productServiceRepo.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product Not Found"));
+        if(prd.getQuantity()>quantity) {
+            prd.setQuantity(prd.getQuantity() - quantity);
+        }
+        else {
+            throw new ProductQuantityOverloadException("we have only "+prd.getQuantity()+" number of items in our stock");
+        }
+        productServiceRepo.save(prd);
+        log.info("Reduce Quantity request processed successfully.");
     }
 }

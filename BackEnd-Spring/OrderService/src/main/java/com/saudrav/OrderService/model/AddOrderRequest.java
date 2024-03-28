@@ -1,5 +1,6 @@
 package com.saudrav.OrderService.model;
 
+import com.saudrav.OrderService.utils.enums.PaymentMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
