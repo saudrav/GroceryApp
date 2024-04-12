@@ -41,6 +41,7 @@ public class ProductController {
                                                   @RequestParam("quantity") int quantity) {
         productService.reduceQuantity(id, quantity);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
     }
 
 
